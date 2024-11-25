@@ -31,40 +31,40 @@ const send = () => {
       });
 };
 
-const initWebsocket = () => {
-  //初始化websocket
-  let planWebsocket: any = null;
-  let planIP: any = "127.0.0.1"; // IP地址
-  let planPort: any = "8765"; // 端口号
-  if ("WebSocket" in window) {
-    planWebsocket = new WebSocket("ws://" + planIP + ":" + planPort); // 通信地址
-    planWebsocket.onopen = function (event: any) {
-      console.log("建立连接", event);
-      let sendData = "你好啊";
-      planWebsocket.send(sendData); // 发送获取数据的接口
-    };
-
-    planWebsocket.onmessage = function (event: any) {
-      console.log("收到消息:" + event.data);
-    };
-
-    planWebsocket.onclose = function (event: any) {
-      console.log("连接关闭", event);
-    };
-
-    planWebsocket.onerror = function () {
-      alert("websocket通信发生错误！");
-    };
-  } else {
-    alert("该浏览器不支持websocket!");
-  }
-};
+// const initWebsocket = () => {
+//   //初始化websocket
+//   let planWebsocket: any = null;
+//   let planIP: any = "127.0.0.1"; // IP地址
+//   let planPort: any = "8765"; // 端口号
+//   if ("WebSocket" in window) {
+//     planWebsocket = new WebSocket("ws://" + planIP + ":" + planPort); // 通信地址
+//     planWebsocket.onopen = function (event: any) {
+//       console.log("建立连接", event);
+//       let sendData = "你好啊";
+//       planWebsocket.send(sendData); // 发送获取数据的接口
+//     };
+//
+//     planWebsocket.onmessage = function (event: any) {
+//       console.log("收到消息:" + event.data);
+//     };
+//
+//     planWebsocket.onclose = function (event: any) {
+//       console.log("连接关闭", event);
+//     };
+//
+//     planWebsocket.onerror = function () {
+//       alert("websocket通信发生错误！");
+//     };
+//   } else {
+//     alert("该浏览器不支持websocket!");
+//   }
+// };
 
 // 发送websokcet消息
-const sendWebSocket = () => {
-  console.log("发送websocket消息");
-  initWebsocket();
-};
+// const sendWebSocket = () => {
+//   console.log("发送websocket消息");
+//   initWebsocket();
+// };
 const toSite = () => {
   console.log(window)
   window.location.href='https://wms.xiaoqiaotq.top'
