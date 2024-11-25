@@ -16,11 +16,14 @@ import axios from "axios";
 const send = () => {
   axios({
     method: "get",
-    url: "https://httpbin.org/ip",
+    // url: "https://httpbin.org/ip",
+    url: "https://httpbin.org/uuid",
+    // url: "https://httpbin.org/image/png",
   })
       .then(function (resp) {
+        greetMsg.value=JSON.stringify(resp.data)
         //resp表示执行成功的结果
-        console.log("axios1111-----", resp);
+        console.log("axios1111-121----", resp);
       })
       .catch((err) => {
         //catch表示执行失败的调用函数 err表示失败的结果
@@ -62,13 +65,17 @@ const sendWebSocket = () => {
   console.log("发送websocket消息");
   initWebsocket();
 };
+const toSite = () => {
+  console.log(window)
+  window.location.href='https://wms.xiaoqiaotq.top'
+};
 
 
 </script>
 
 <template>
   <main class="container">
-    <h1>1221 to </h1>
+    <h1>hello tony </h1>
 
 <!--    <div class="row">-->
 <!--      <a href="https://vitejs.dev" target="_blank">-->
@@ -85,7 +92,8 @@ const sendWebSocket = () => {
     <div>
       <button @click="send">发送axios请求</button>
       &nbsp; &nbsp; &nbsp;
-      <button @click="sendWebSocket">发送Websocket</button>
+<!--      <button @click="sendWebSocket">发送Websocket</button>-->
+      <button @click="toSite">百度</button>
     </div>
 
     <p>Click on 1221</p>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "test-tauri",
+  "productName": "slink",
   "version": "0.1.0",
   "identifier": "org.xiaoqiaotq.tauri-demo",
   "build": {
@@ -12,9 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "test-tauri",
-        "width": 800,
-        "height": 600
+        "title": "slink2",
+        "width": 1200,
+        "height": 800
       }
     ],
     "security": {
