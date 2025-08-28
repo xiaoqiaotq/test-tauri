@@ -1,7 +1,35 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import { invoke } from "@tauri-apps/api/core";
 
+const greetMsg = ref("");
+const name = ref("");
 
+async function greet() {
+  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+  greetMsg.value = await invoke("greet", { name: name.value });
+  // greetMsg.value = name.value+' aaaaa';
+}
 
+import axios from "axios";
+
+const send = () => {
+  axios({
+    method: "get",
+    // url: "https://httpbin.org/ip",
+    url: "https://httpbin.org/uuid",
+    // url: "https://httpbin.org/image/png",
+  })
+      .then(function (resp) {
+        greetMsg.value=JSON.stringify(resp.data)
+        //resp表示执行成功的结果
+        console.log("axios1111-121----", resp);
+      })
+      .catch((err) => {
+        //catch表示执行失败的调用函数 err表示失败的结果
+        console.log("请求失败", err);
+      });
+};
 
 // const initWebsocket = () => {
 //   //初始化websocket
@@ -37,45 +65,58 @@
 //   console.log("发送websocket消息");
 //   initWebsocket();
 // };
+const toSite = () => {
+  console.log(window)
+  window.location.href='https://wms.xiaoqiaotq.top'
+};
 
 
 </script>
 
 <template>
   <main class="container">
-    <h1>hello tony </h1>
 
-    <!-- 导航栏 -->
-    <nav class="nav">
-      <!-- 路由链接 -->
-      <router-link to="/home" class="nav-link" active-class="active">首页</router-link>
-      <router-link to="/monitor" class="nav-link" active-class="active">监控</router-link>
-<!--      <router-link :to="{ name: 'User', params: { id: 1 } }" class="nav-link" active-class="active">用户1</router-link>-->
-<!--      <button @click="goToUser(2)">用户2</button>-->
-    </nav>
+    <!--    <div class="row">-->
+    <!--      <a href="https://vitejs.dev" target="_blank">-->
+    <!--        <img src="/vite.svg" class="logo vite" alt="Vite logo" />-->
+    <!--      </a>-->
+    <!--      <a href="https://tauri.app" target="_blank">-->
+    <!--        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />-->
+    <!--      </a>-->
+    <!--      <a href="https://vuejs.org/" target="_blank">-->
+    <!--        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />-->
+    <!--      </a>-->
+    <!--    </div>-->
 
-    <!-- 路由出口 - 匹配的组件将在这里渲染 -->
-    <router-view />
+    <div>
+      <button @click="send">发送axios请求</button>
+      &nbsp; &nbsp; &nbsp;
+      <!--      <button @click="sendWebSocket">发送Websocket</button>-->
+      <button @click="toSite">百度22</button>
+    </div>
 
+    <p>Click on 1221</p>
+
+    <a class="navbar-brand" href="#" @click.prevent="$router.push('/monitor')">
+      <i class="bi bi-bar-chart-line me-2"></i>系统监控
+    </a>
+
+    <form class="row" @submit.prevent="greet">
+      <input id="greet-input" v-model="name" placeholder="Enter a name..." />
+      <button type="submit">Greet</button>
+    </form>
+    <p>{{ greetMsg }}</p>
 
   </main>
 </template>
 
 <style scoped>
-.nav {
-  padding: 20px;
-  margin-bottom: 20px;
+.logo.vite:hover {
+  filter: drop-shadow(0 0 2em #747bff);
 }
 
-.nav-link {
-  margin-right: 15px;
-  text-decoration: none;
-  color: #5480ad;
-}
-
-.nav-link.active {
-  color: #42b983;
-  font-weight: bold;
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #249b73);
 }
 
 </style>
@@ -103,6 +144,22 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: 0.75s;
+}
+
+.logo.tauri:hover {
+  filter: drop-shadow(0 0 2em #24c8db);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
 }
 
 a {
