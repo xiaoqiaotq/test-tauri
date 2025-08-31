@@ -27,7 +27,7 @@ const send = () => {
       .then(function (resp) {
         greetMsg.value=JSON.stringify(resp.data)
         //resp表示执行成功的结果
-        console.log("axios1111-123331---11dd-", resp);
+        console.log("axios1111-12eedf3331---11dd-", resp);
       })
       .catch((err) => {
         //catch表示执行失败的调用函数 err表示失败的结果
