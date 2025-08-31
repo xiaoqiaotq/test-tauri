@@ -341,7 +341,7 @@ header {
 header h1 {
   font-size: 2rem;
   margin-bottom: 10px;
-  color: #2c3e50;
+  color: #4097ec;
 }
 
 .stats-grid {

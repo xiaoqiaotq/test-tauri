@@ -3,5 +3,4 @@
 
 fn main() {
     test_tauri_lib::run()
-
 }

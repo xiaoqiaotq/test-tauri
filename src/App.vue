@@ -43,7 +43,7 @@
 
 <template>
   <main class="container">
-    <h1>hello tony </h1>
+    <h1>hello tauri </h1>
 
     <!-- 导航栏 -->
     <nav class="nav">

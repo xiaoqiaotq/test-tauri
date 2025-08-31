@@ -2,6 +2,10 @@
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 
+import { version,type,arch } from '@tauri-apps/plugin-os';
+const  osVersion = version();
+const osType = type();
+const osArch = arch();
 const greetMsg = ref("");
 const name = ref("");
 
@@ -67,7 +71,7 @@ const send = () => {
 // };
 const toSite = () => {
   console.log(window)
-  window.location.href='https://wms.xiaoqiaotq.top'
+  window.location.href='https://xiaoqiaotq.top'
 };
 
 
@@ -89,6 +93,7 @@ const toSite = () => {
     <!--    </div>-->
 
     <div>
+      <div>{{osType}}-{{osArch}} {{osVersion}} </div>
       <button @click="send">发送axios请求</button>
       &nbsp; &nbsp; &nbsp;
       <!--      <button @click="sendWebSocket">发送Websocket</button>-->

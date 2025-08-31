@@ -1,7 +1,7 @@
-use std::sync::Mutex;
-use tauri::{Emitter, Manager};
-use sysinfo::{CpuExt, NetworkExt, NetworksExt, System, SystemExt};
 use crate::monitor::{AppState, CpuInfo, MemoryInfo, NetworkInfo, NetworkStats, SystemInfo};
+use std::sync::Mutex;
+use sysinfo::{CpuExt, NetworkExt, NetworksExt, System, SystemExt};
+use tauri::{Emitter, Manager};
 
 mod monitor;
 
@@ -22,19 +22,18 @@ pub fn run12() {
     println!("Running from run12 function");
 }
 
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let sys = System::new_all();
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         .manage(crate::monitor::AppState {
             sys: Mutex::new(sys),
             last_network_stats: Mutex::new(None),
         })
         .setup(|app| {
             let app_handle = app.handle();
-            println!("sadffsdsfd");
             println!("App name: {}", app_handle.package_info().name);
 
             let handle = app_handle.clone();
@@ -51,7 +50,7 @@ pub fn run() {
 
                     // 获取内存信息
                     let total_memory = sys.total_memory();
-                    let used_memory = total_memory - sys.available_memory();
+                    let used_memory = sys.used_memory();
                     let used_memory_percent = (used_memory as f32 / total_memory as f32) * 100.0;
 
                     // 获取网络信息
@@ -67,9 +66,10 @@ pub fn run() {
                     // 计算网络速度
                     let mut last_stats = app_state.last_network_stats.lock().unwrap();
                     let (rx_speed, tx_speed) = match *last_stats {
-                        Some(ref stats) => {
-                            (rx_bytes.saturating_sub(stats.rx_bytes), tx_bytes.saturating_sub(stats.tx_bytes))
-                        }
+                        Some(ref stats) => (
+                            rx_bytes.saturating_sub(stats.rx_bytes),
+                            tx_bytes.saturating_sub(stats.tx_bytes),
+                        ),
                         None => (0, 0),
                     };
 
@@ -96,6 +96,7 @@ pub fn run() {
 
                     // 每秒更新一次
                     std::thread::sleep(std::time::Duration::from_secs(1));
+                    // tokio::time::sleep(std::time::Duration::from_secs(1)).await;
                 }
             });
             // setup code here
@@ -105,7 +106,4 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
-
-
-
 }

@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "slink",
+  "productName": "monitor-app",
   "version": "0.1.0",
-  "identifier": "org.xiaoqiaotq.tauri-demo",
+  "identifier": "org.xiaoqiaotq.monitor",
   "build": {
     "beforeDevCommand": "yarn dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "slink2",
+        "title": "monitor-app",
         "width": 1200,
         "height": 800
       }
