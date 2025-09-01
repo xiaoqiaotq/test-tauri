@@ -20,11 +20,44 @@ async function getAppVersion() {
   appVersion.value=v
   return v
 }
+import { check } from '@tauri-apps/plugin-updater';
+import { relaunch } from '@tauri-apps/plugin-process'
+
 
 async function update() {
-  console.log('update---')
-  return 'update'
+  const update = await check()
+
+  if (update) {
+    console.log(`found update ${update.version} from ${update.date} with notes ${update.body}`)
+    let downloaded = 0
+    let contentLength = 0
+    // 也可以分开调用 update.download() 和 update.install()
+    await update.downloadAndInstall(event => {
+      switch (event.event) {
+        case 'Started':
+          contentLength = event.data.contentLength
+          console.log(`started downloading ${event.data.contentLength} bytes`)
+          break
+        case 'Progress':
+          downloaded += event.data.chunkLength
+          console.log(`downloaded ${downloaded} from ${contentLength}`)
+          break
+        case 'Finished':
+          console.log('download finished')
+          break
+      }
+    })
+
+    console.log('update installed')
+    // 此处 relaunch 前最好询问用户
+    await relaunch()
+  }
+
 }
+
+
+
+
 
 async function greet() {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/

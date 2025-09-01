@@ -37,6 +37,7 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDUxOUM2RDdFNEU4ODgxMzYKUldRMmdZaE9mbTJjVVJBUXgwY1Y3KzJoWk1rQUZ3ZU9uYkhyNEZHb00rU2pkNjFCKzdJUXNJbkYK",
       "endpoints": [
+        "https://cdn.gh-proxy.com/https://github.com/xiaoqiaotq/test-tauri/releases/latest/download/latest.json",
         "https://gh-proxy.com/github.com/xiaoqiaotq/test-tauri/releases/latest/download/latest.json"
       ]
     }
