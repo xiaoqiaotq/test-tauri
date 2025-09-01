@@ -27,6 +27,7 @@ pub fn run() {
     let sys = System::new_all();
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_os::init())
         .manage(crate::monitor::AppState {
             sys: Mutex::new(sys),
