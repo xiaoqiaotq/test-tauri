@@ -28,7 +28,7 @@ async function update() {
   const update = await check()
 
   if (update) {
-    console.log(`found update2255 ${update.version} from ${update.date} with notes ${update.body}`)
+    console.log(`found update2255333 ${update.version} from ${update.date} with notes ${update.body}`)
     let downloaded = 0
     let contentLength = 0
     // 也可以分开调用 update.download() 和 update.install()
