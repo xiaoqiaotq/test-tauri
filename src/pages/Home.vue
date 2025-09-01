@@ -90,7 +90,8 @@ const send = () => {
 // };
 const toSite = () => {
   console.log(window)
-  window.location.href='https://xiaoqiaotq.top'
+  // window.location.href='https://xiaoqiaotq.top'
+  window.location.href='https://baidu.com'
 };
 
 
