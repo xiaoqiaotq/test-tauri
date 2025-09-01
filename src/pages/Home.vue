@@ -117,7 +117,7 @@ const toSite = () => {
       <button @click="update">更新</button>
       &nbsp; &nbsp; &nbsp;
       <!--      <button @click="sendWebSocket">发送Websocket</button>-->
-      <button @click="toSite">百度22</button>
+      <button @click="toSite">百度</button>
     </div>
 
     <p>Click on 1221</p>
