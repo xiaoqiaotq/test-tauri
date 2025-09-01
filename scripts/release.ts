@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
   const tomlPath = resolve(__dirname, '..', 'src-tauri', 'Cargo.toml')
   const lockPath = resolve(__dirname, '..', 'Cargo.lock')
 
-  for (const path of [tomlPath, lockPath]) {
+  for (const path of [tomlPath]) {
     let content = readFileSync(path, 'utf-8')
 
     const regexp = new RegExp(
