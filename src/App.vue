@@ -43,8 +43,6 @@
 
 <template>
   <main class="container">
-    <h1>hello tauri </h1>
-
     <!-- 导航栏 -->
     <nav class="nav">
       <!-- 路由链接 -->

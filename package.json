@@ -11,7 +11,8 @@
     "tauri-dev": "tauri dev",
     "tauri-dev-android": "tauri android dev",
     "tauri-build-android": "tauri android build",
-    "tauri-build": "tauri build"
+    "tauri-build": "tauri build",
+    "release": "release-it"
   },
   "dependencies": {
     "@tauri-apps/api": "2.8.0",
@@ -27,6 +28,7 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "typescript": "5.6.2",
     "vite": "^5.3.1",
+    "release-it": "^18.1.2",
     "vue-tsc": "2.0.29"
   }
 }

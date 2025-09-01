@@ -1,21 +1,40 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
+import {onMounted, ref} from "vue";
+import {invoke} from "@tauri-apps/api/core";
+import {getVersion} from '@tauri-apps/api/app';
 
-import { version,type,arch } from '@tauri-apps/plugin-os';
+import {arch, type, version} from '@tauri-apps/plugin-os';
+import axios from "axios";
+
 const  osVersion = version();
 const osType = type();
 const osArch = arch();
 const greetMsg = ref("");
 const name = ref("");
+const appVersion = ref("");
+
+async function getAppVersion() {
+  console.log('getAppVersion---')
+  let v= await getVersion()
+  console.log('getAppVersion2222---',v)
+  appVersion.value=v
+  return v
+}
+
+async function update() {
+  console.log('update---')
+  return 'update'
+}
 
 async function greet() {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   greetMsg.value = await invoke("greet", { name: name.value });
   // greetMsg.value = name.value+' aaaaa';
 }
-
-import axios from "axios";
+onMounted(() => {
+  console.log('onMounted---')
+  getAppVersion()
+});
 
 const send = () => {
   axios({
@@ -93,8 +112,9 @@ const toSite = () => {
     <!--    </div>-->
 
     <div>
-      <div>{{osType}}-{{osArch}} {{osVersion}} </div>
+      <div>Os:{{osType}}-{{osArch}} {{osVersion}} AppVersion:{{appVersion}} </div>
       <button @click="send">发送axios请求</button>
+      <button @click="update">更新</button>
       &nbsp; &nbsp; &nbsp;
       <!--      <button @click="sendWebSocket">发送Websocket</button>-->
       <button @click="toSite">百度22</button>
