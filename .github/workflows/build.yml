@@ -38,7 +38,7 @@ jobs:
           CONTENT=$(cat changelog_content.txt)
 
           # 将内容写入GITHUB_OUTPUT，供后续步骤使用
-          {
+          \{
             echo "content<<EOF"
             echo "$CONTENT"
             echo "EOF"
