@@ -45,7 +45,9 @@ jobs:
           - platform: 'ubuntu-22.04'
             args: ''
           - platform: 'windows-latest'
-            args: ''
+            args: '--target x86_64-pc-windows-msvc'
+          - platform: 'windows-latest'
+            args: '--target arch64-pc-windows-msvc'
 
     runs-on: ${{ matrix.platform }}
     steps:
