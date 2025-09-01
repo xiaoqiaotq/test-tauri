@@ -30,9 +30,9 @@ jobs:
       - name: Generate changelog
         id: create_release
         run: |
-          npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
+#          npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
           # 使用changelogithub生成变更内容，并输出到临时文件
-          changelogithub --dry --output changelog_content.txt  # --dry-run仅生成不提交（测试用）
+          npx changelogithub --dry --output changelog_content.txt  # --dry-run仅生成不提交（测试用）
 
           # 读取生成的内容（支持多行）
           CONTENT=$(cat changelog_content.txt)
