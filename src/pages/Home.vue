@@ -35,11 +35,11 @@ async function update() {
     await update.downloadAndInstall(event => {
       switch (event.event) {
         case 'Started':
-          contentLength = event.data.contentLength
+          contentLength = event.data.contentLength || 0
           console.log(`started downloading ${event.data.contentLength} bytes`)
           break
         case 'Progress':
-          downloaded += event.data.chunkLength
+          downloaded += event.data.chunkLength || 0
           console.log(`downloaded ${downloaded} from ${contentLength}`)
           break
         case 'Finished':
