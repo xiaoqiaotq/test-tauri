@@ -30,7 +30,7 @@ jobs:
         id: create_release
         run: |
           echo "asfdsfd"
-          npx changelogithub --dry --output changelog_content.txt
+          npx changelogithub --output changelog_content.txt
           # 读取生成的内容（支持多行）
           CONTENT=$(cat changelog_content.txt)
 
