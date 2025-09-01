@@ -4,10 +4,32 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 0.*
+      - v*
 
 jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate changelog
+        id: create_release
+        run: npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish-tauri:
+    needs: create-release
     permissions:
       contents: write
     strategy:
@@ -57,10 +79,12 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          tagName: ${{ github.ref_name }}
+          releaseName: sys-monitor ${{ needs.create-release.outputs.APP_VERSION }}
+          releaseBody: ''
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
