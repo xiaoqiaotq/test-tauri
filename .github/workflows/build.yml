@@ -38,16 +38,31 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
-            args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest' # for Intel based macs.
-            args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04'
-            args: ''
-          - platform: 'windows-latest'
-            args: '--target x86_64-pc-windows-msvc'
-          - platform: 'windows-latest'
-            args: '--target arch64-pc-windows-msvc'
+#          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+#            args: '--target aarch64-apple-darwin'
+#          - platform: 'macos-latest' # for Intel based macs.
+#            args: '--target x86_64-apple-darwin'
+#          - platform: 'ubuntu-22.04'
+#            args: ''
+#          - platform: 'windows-latest'
+#            args: '--target x86_64-pc-windows-msvc'
+#          - platform: 'windows-latest'
+#            args: '--target arch64-pc-windows-msvc'
+
+          - platform: "macos-latest"
+            target: "aarch64-apple-darwin"
+          - platform: "macos-latest"
+            target: "x86_64-apple-darwin"
+
+          - platform: "windows-latest"
+            target: "x86_64-pc-windows-msvc"
+          - platform: "windows-latest"
+            target: "i686-pc-windows-msvc"
+          - platform: "windows-latest"
+            target: "aarch64-pc-windows-msvc"
+
+          - platform: "ubuntu-22.04"
+            target: "x86_64-unknown-linux-gnu"
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -65,11 +80,12 @@ jobs:
           node-version: lts/*
           cache: 'yarn' # Set this to npm, yarn or pnpm.
 
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
-        with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+      - name: Install rust target
+        run: rustup target add ${{ matrix.target }}
+
+      # 安装 Rust
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
@@ -82,6 +98,8 @@ jobs:
 
       - uses: tauri-apps/tauri-action@v0
         env:
+          CI: false
+          PLATFORM: ${{ matrix.platform }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
@@ -91,4 +109,4 @@ jobs:
           releaseBody: ''
           releaseDraft: true
           prerelease: false
-          args: ${{ matrix.args }}
+          args: --target ${{ matrix.target }}
